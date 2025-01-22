@@ -1,3 +1,4 @@
+import uuid
 from typing import Annotated
 
 from fastapi import Path, Depends, HTTPException, status
@@ -9,7 +10,7 @@ from . import crud
 
 
 async def lobby_by_id(
-    lobby_id: Annotated[str, Path],
+    lobby_id: Annotated[uuid.UUID, Path],
     session: AsyncSession = Depends(db_helper.get_session),
 ) -> Lobby:
     lobby = await crud.get_lobby_by_id(

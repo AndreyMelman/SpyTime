@@ -1,6 +1,7 @@
+import uuid
 from typing import Annotated
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class Player(BaseModel):
@@ -10,15 +11,19 @@ class Player(BaseModel):
     spy: Annotated[bool, Field()] = False
 
 
-class LobbyCreate(BaseModel):
-    id: Annotated[str, Field(min_length=1, max_length=50)]
-    players: Annotated[list[Player], Field(min_items=1, max_items=30)]
-
-
-class LobbyResponse(BaseModel):
-    id: Annotated[str, Field(min_length=1, max_length=50)]
+class LobbyBase(BaseModel):
     players: Annotated[list[Player], Field()]
 
 
-class LobbyUpdate(BaseModel):
-    players: Annotated[list[Player], Field()]
+class LobbyCreate(LobbyBase):
+    pass
+
+
+class LobbyUpdate(LobbyBase):
+    pass
+
+
+class Lobby(LobbyBase):
+    model_config = ConfigDict(from_attributes=True)
+
+    lobby_id: Annotated[uuid.UUID, Field()]

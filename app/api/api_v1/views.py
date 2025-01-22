@@ -5,13 +5,13 @@ from models import Lobby
 from . import crud
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from .shemas import LobbyCreate, LobbyResponse, LobbyUpdate
+from .shemas import LobbyCreate, LobbyUpdate, Lobby
 from .dependencies import lobby_by_id
 
 router = APIRouter(tags=["Lobby"])
 
 
-@router.get("/", response_model=list[LobbyResponse])
+@router.get("/", response_model=list[Lobby])
 async def get_lobbies(
     session: AsyncSession = Depends(db_helper.get_session),
 ):
@@ -20,7 +20,7 @@ async def get_lobbies(
     )
 
 
-@router.get("/{lobby_id}", response_model=LobbyResponse)
+@router.get("/{lobby_id}", response_model=Lobby)
 async def get_lobby_by_id(
     lobby: Lobby = Depends(lobby_by_id),
 ):
@@ -29,7 +29,7 @@ async def get_lobby_by_id(
 
 @router.post(
     "/",
-    response_model=LobbyCreate,
+    response_model=Lobby,
     status_code=status.HTTP_201_CREATED,
 )
 async def create_lobby(
@@ -42,7 +42,7 @@ async def create_lobby(
     )
 
 
-@router.patch("/{lobby_id}", response_model=LobbyResponse)
+@router.patch("/{lobby_id}", response_model=Lobby)
 async def update_lobby(
     lobby_update: LobbyUpdate,
     lobby: Lobby = Depends(lobby_by_id),
@@ -56,7 +56,7 @@ async def update_lobby(
     )
 
 
-@router.put("/{lobby_id}", response_model=LobbyResponse)
+@router.put("/{lobby_id}", response_model=Lobby)
 async def clean_lobby(
     lobby: Lobby = Depends(lobby_by_id),
     session: AsyncSession = Depends(db_helper.get_session),

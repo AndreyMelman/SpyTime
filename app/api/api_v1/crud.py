@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import HTTPException, status
 
 from models import Lobby
@@ -9,7 +11,7 @@ from sqlalchemy import select
 async def get_lobbies(
     session: AsyncSession,
 ) -> list[Lobby]:
-    stmt = select(Lobby).order_by(Lobby.id)
+    stmt = select(Lobby).order_by(Lobby.lobby_id)
     result = await session.execute(stmt)
     lobbies = result.scalars().all()
     return list(lobbies)
@@ -17,9 +19,9 @@ async def get_lobbies(
 
 async def get_lobby_by_id(
     session: AsyncSession,
-    lobby_id: str,
+    lobby_id: uuid.UUID,
 ) -> Lobby | None:
-    stmt = select(Lobby).where(Lobby.id == lobby_id)
+    stmt = select(Lobby).where(Lobby.lobby_id == lobby_id)
     result = await session.execute(stmt)
     lobby = result.scalar_one_or_none()
 
@@ -30,16 +32,6 @@ async def create_lobby(
     session: AsyncSession,
     lobby_in: LobbyCreate,
 ) -> Lobby | HTTPException:
-    stmt = select(Lobby).where(Lobby.id == lobby_in.id)
-    result = await session.execute(stmt)
-    existing_lobby = result.scalar_one_or_none()
-
-    if existing_lobby:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Lobby with this ID already exists",
-        )
-
     new_lobby = Lobby(**lobby_in.model_dump())
     session.add(new_lobby)
     await session.commit()
