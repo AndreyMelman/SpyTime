@@ -1,21 +1,23 @@
-from pydantic import BaseModel
+from typing import Annotated
+
+from pydantic import BaseModel, Field
 
 
 class Player(BaseModel):
-    name: str
-    selected: bool = False
-    spy: bool = False
+    name: Annotated[str, Field(min_length=1, max_length=50)]
+    selected: Annotated[bool, Field()] = False
+    spy: Annotated[bool, Field()] = False
 
 
 class LobbyCreate(BaseModel):
-    id: str
-    players: list[Player]
+    id: Annotated[str, Field(min_length=1, max_length=50)]
+    players: Annotated[list[Player], Field(min_items=1, max_items=30)]
 
 
 class LobbyResponse(BaseModel):
-    id: str
-    players: list[Player]
+    id: Annotated[str, Field(min_length=1, max_length=50)]
+    players: Annotated[list[Player], Field()]
 
 
 class LobbyUpdate(BaseModel):
-    players: list[Player]
+    players: Annotated[list[Player], Field()]
