@@ -56,6 +56,17 @@ async def update_lobby(
     )
 
 
+@router.put("/{lobby_id}", response_model=LobbyResponse)
+async def clean_lobby(
+    lobby: Lobby = Depends(lobby_by_id),
+    session: AsyncSession = Depends(db_helper.get_session),
+):
+    return await crud.clean_lobby(
+        session=session,
+        lobby=lobby,
+    )
+
+
 @router.delete(
     "/{lobby_id}",
     status_code=status.HTTP_204_NO_CONTENT,

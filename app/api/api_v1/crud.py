@@ -58,6 +58,15 @@ async def update_lobby(
     return lobby
 
 
+async def clean_lobby(
+    session: AsyncSession,
+    lobby: Lobby,
+) -> Lobby:
+    lobby.players = []
+    await session.commit()
+    return lobby
+
+
 async def delete_lobby(
     session: AsyncSession,
     lobby: Lobby,
