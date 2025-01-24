@@ -20,7 +20,7 @@ async def get_lobbies(
     )
 
 
-@router.get("/{lobby_id}", response_model=Lobby)
+@router.get("/{lobby_id}/", response_model=Lobby)
 async def get_lobby_by_id(
     lobby: Lobby = Depends(lobby_by_id),
 ):
@@ -42,7 +42,7 @@ async def create_lobby(
     )
 
 
-@router.patch("/{lobby_id}", response_model=Lobby)
+@router.patch("/{lobby_id}/", response_model=Lobby)
 async def update_lobby(
     lobby_update: LobbyUpdate,
     lobby: Lobby = Depends(lobby_by_id),
@@ -56,7 +56,7 @@ async def update_lobby(
     )
 
 
-@router.put("/{lobby_id}", response_model=Lobby)
+@router.put("/{lobby_id}/", response_model=Lobby)
 async def clean_lobby(
     lobby: Lobby = Depends(lobby_by_id),
     session: AsyncSession = Depends(db_helper.get_session),
@@ -68,7 +68,7 @@ async def clean_lobby(
 
 
 @router.delete(
-    "/{lobby_id}",
+    "/{lobby_id}/",
     status_code=status.HTTP_204_NO_CONTENT,
 )
 async def delete_lobby(
