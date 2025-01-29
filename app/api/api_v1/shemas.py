@@ -11,8 +11,15 @@ class Player(BaseModel):
     spy: Annotated[bool, Field()] = False
 
 
+class Location(BaseModel):
+    id: Annotated[str, Field(min_length=1, max_length=50)]
+    name: Annotated[str, Field(min_length=1, max_length=50)]
+
+
 class LobbyBase(BaseModel):
     players: Annotated[list[Player], Field()]
+    location: Annotated[list[Location], Field()]
+    spies_team: Annotated[bool, Field()] = False
 
 
 class LobbyCreate(LobbyBase):
