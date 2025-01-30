@@ -25,7 +25,6 @@ class Lobby(Base):
     location: Mapped[list[dict]] = mapped_column(
         JSON,
         nullable=False,
-        default=[],
     )
 
     spies_team: Mapped[bool] = mapped_column(default=False)

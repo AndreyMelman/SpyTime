@@ -1,8 +1,8 @@
 """Add lobbies table
 
-Revision ID: 44e5d2ed80fb
+Revision ID: 635d76c8bf47
 Revises: 
-Create Date: 2025-01-29 18:55:13.545238
+Create Date: 2025-01-30 15:08:43.119161
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '44e5d2ed80fb'
+revision: str = '635d76c8bf47'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
