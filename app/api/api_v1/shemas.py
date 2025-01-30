@@ -18,7 +18,7 @@ class Location(BaseModel):
 
 class LobbyBase(BaseModel):
     players: Annotated[list[Player], Field()]
-    location: Annotated[list[Location], Field()]
+    location: Location
     spies_team: Annotated[bool, Field()] = False
 
 
