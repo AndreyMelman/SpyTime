@@ -11,7 +11,7 @@ from .dependencies import lobby_by_id
 router = APIRouter(tags=["Lobby"])
 
 
-@router.get("", response_model=list[Lobby])
+@router.get("/", response_model=list[Lobby])
 async def get_lobbies(
     session: AsyncSession = Depends(db_helper.get_session),
 ):
@@ -28,7 +28,7 @@ async def get_lobby_by_id(
 
 
 @router.post(
-    "",
+    "/",
     response_model=Lobby,
     status_code=status.HTTP_201_CREATED,
 )
