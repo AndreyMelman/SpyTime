@@ -1,0 +1,5 @@
+[tool.ruff]
+line-length = 88  
+
+# extend-ignore = ["E501", "W391"]  
+
