@@ -18,7 +18,7 @@ class LobbyBase(BaseModel):
     players: Annotated[list[Player], Field()]
     location: Location
     spies_team: Annotated[bool, Field()] = False
-
+    lang: Annotated[str, Field()]
 
 class LobbyCreate(LobbyBase):
     pass

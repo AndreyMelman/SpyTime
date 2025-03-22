@@ -3,7 +3,7 @@ import uuid
 from sqlalchemy.dialects.postgresql import UUID
 
 from core.db.base import Base
-from sqlalchemy import JSON
+from sqlalchemy import JSON, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -18,13 +18,13 @@ class Lobby(Base):
 
     players: Mapped[list[dict]] = mapped_column(
         JSON,
-        nullable=False,
         default=[],
     )
 
     location: Mapped[list[dict]] = mapped_column(
         JSON,
-        nullable=False,
     )
 
     spies_team: Mapped[bool] = mapped_column(default=False)
+
+    lang: Mapped[str] = mapped_column(String(20))
