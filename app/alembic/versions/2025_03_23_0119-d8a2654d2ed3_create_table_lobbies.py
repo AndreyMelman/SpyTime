@@ -1,8 +1,8 @@
-"""Add lobbies table
+"""Create table lobbies
 
-Revision ID: 635d76c8bf47
+Revision ID: d8a2654d2ed3
 Revises: 
-Create Date: 2025-01-30 15:08:43.119161
+Create Date: 2025-03-23 01:19:13.141456
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '635d76c8bf47'
+revision: str = 'd8a2654d2ed3'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -25,6 +25,7 @@ def upgrade() -> None:
     sa.Column('players', sa.JSON(), nullable=False),
     sa.Column('location', sa.JSON(), nullable=False),
     sa.Column('spies_team', sa.Boolean(), nullable=False),
+    sa.Column('lang', sa.String(length=20), nullable=False),
     sa.PrimaryKeyConstraint('lobby_id')
     )
     # ### end Alembic commands ###
