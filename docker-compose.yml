@@ -16,12 +16,14 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./letsencrypt:/letsencrypt"
+    depends_on:
+      pg:
+        condition: service_healthy
 
   app:
     build:
+      dockerfile: ./Dockerfile
       context: .
-      dockerfile: app/Dockerfile
-    container_name: fastapi
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`api.spytime.online`)"
@@ -29,12 +31,32 @@ services:
       - "traefik.http.routers.app.tls.certresolver=letsencrypt"
     ports:
       - "8000:8000"
-    volumes:
-      - ./app:/code/app
     environment:
-      - DATABASE_URL=sqlite:///./sqlite.db
-    command: poetry run uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8000 --reload
-    restart: unless-stopped
+      APP_CONFIG__DB__URL: postgresql+asyncpg://user:user@pg:5432/app
+    depends_on:
+      pg:
+        condition: service_healthy
+
+  pg:
+    image: postgres:16.4
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d app" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  pgdata:
+
 
 
 
