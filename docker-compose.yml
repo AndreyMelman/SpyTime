@@ -1,6 +1,7 @@
 services:
   traefik:
     image: traefik:v2.9
+    container_name: traefik_spytime
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
@@ -24,7 +25,7 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: .
-    container_name: app
+    container_name: app_spytime
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`api.spytime.online`)"
@@ -40,6 +41,7 @@ services:
 
   pg:
     image: postgres:16.4
+    container_name: postgres_spytime
     environment:
       POSTGRES_DB: app
       POSTGRES_USER: user

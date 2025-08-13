@@ -3,7 +3,7 @@ EXEC = docker exec -it
 LOGS = docker logs
 ENV = --env-file .env
 APP_FILE = docker-compose.yml
-APP_CONTAINER = app
+APP_CONTAINER = app_spytime
 
 .PHONY: app app-down app-shell app-logs test
 
