@@ -24,6 +24,7 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: .
+    container_name: app
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.app.rule=Host(`api.spytime.online`)"
