@@ -1,9 +1,9 @@
 import uuid
 
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.dialects.postgresql import UUID, JSONB
 
 from core.db.base import Base
-from sqlalchemy import JSON, String
+from sqlalchemy import String, Boolean
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -17,14 +17,17 @@ class Lobby(Base):
     )
 
     players: Mapped[list[dict]] = mapped_column(
-        JSON,
-        default=[],
+        JSONB,
+        default=list,
     )
 
     location: Mapped[list[dict]] = mapped_column(
-        JSON,
+        JSONB,
     )
 
-    spies_team: Mapped[bool] = mapped_column(default=False)
+    spies_team: Mapped[bool] = mapped_column(
+        Boolean,
+        default=False,
+    )
 
     lang: Mapped[str] = mapped_column(String(20))

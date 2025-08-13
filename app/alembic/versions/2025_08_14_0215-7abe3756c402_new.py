@@ -1,8 +1,8 @@
-"""Create table lobbies
+"""new
 
-Revision ID: d8a2654d2ed3
+Revision ID: 7abe3756c402
 Revises:
-Create Date: 2025-03-23 01:19:13.141456
+Create Date: 2025-08-14 02:15:45.955080
 
 """
 
@@ -10,10 +10,10 @@ from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
-
+from sqlalchemy.dialects import postgresql
 
 # revision identifiers, used by Alembic.
-revision: str = "d8a2654d2ed3"
+revision: str = "7abe3756c402"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,8 +24,8 @@ def upgrade() -> None:
     op.create_table(
         "lobbies",
         sa.Column("lobby_id", sa.UUID(), nullable=False),
-        sa.Column("players", sa.JSON(), nullable=False),
-        sa.Column("location", sa.JSON(), nullable=False),
+        sa.Column("players", postgresql.JSONB(astext_type=sa.Text()), nullable=False),
+        sa.Column("location", postgresql.JSONB(astext_type=sa.Text()), nullable=False),
         sa.Column("spies_team", sa.Boolean(), nullable=False),
         sa.Column("lang", sa.String(length=20), nullable=False),
         sa.PrimaryKeyConstraint("lobby_id"),
