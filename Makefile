@@ -5,7 +5,7 @@ ENV = --env-file .env
 APP_FILE = docker-compose.yml
 APP_CONTAINER = app_spytime
 
-.PHONY: app app-down app-shell app-logs test
+.PHONY: app app-down app-shell app-logs test app-down-v
 
 app:
 	${DC} -f ${APP_FILE} up --build -d
@@ -18,3 +18,6 @@ app-shell:
 
 app-logs:
 	${LOGS} ${APP_CONTAINER} -f
+
+app-down-v:
+	${DC} -f ${APP_FILE} down -v
