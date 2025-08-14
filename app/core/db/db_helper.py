@@ -1,3 +1,4 @@
+import logging
 from typing import AsyncGenerator
 
 from fastapi import HTTPException, status
@@ -11,6 +12,7 @@ from sqlalchemy.ext.asyncio import (
 
 from core.config import settings
 
+log = logging.getLogger(__name__)
 
 class DatabaseHelper:
     def __init__(
@@ -34,6 +36,7 @@ class DatabaseHelper:
     async def dispose(self) -> None:
         try:
             await self.engine.dispose()
+            log.info("Database engine disposed")
         except SQLAlchemyError as e:
             raise HTTPException(
                 status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Database error"
